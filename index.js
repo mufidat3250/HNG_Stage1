@@ -14,8 +14,13 @@ app.get("/", (req, response) => {
 
 app.get("/api/hello", async (request, response) => {
   const { visitor_name } = request.query;
-  const ipAddress = request.ip.slice(7);
+  const ipAddress = request.ip;
   const {location, temperature} = await fetchweatherData()
+  console.log(ipAddress, 'ip adreesss')
+
+  const locationRes = await fetch(`https://ipapi.co/json/`)
+  const data = await locationRes.json()
+  console.log(data, 'iii') 
   response
     .status(200)
     .json({
