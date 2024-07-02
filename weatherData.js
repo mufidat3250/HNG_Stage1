@@ -1,12 +1,11 @@
 let location, temperature;
 
 const url = "https://api.openweathermap.org/data/2.5/weather";
-async function fetchweatherData() {
+async function fetchweatherData(city) {
   const geolocation = await fetch(`https://ipapi.co/json/`);
   const geolocationResponse = await geolocation.json();
   const params = {
-    lat: geolocationResponse.latitude,
-    lon: geolocationResponse.longitude,
+    q:city,
     appid: process.env.API_Key,
     units: "metric",
   };
