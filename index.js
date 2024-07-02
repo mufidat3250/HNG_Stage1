@@ -7,9 +7,9 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
-// app.get("/api/hello", (req, response) => {
-//     response.send(`hello world`)
-// })
+app.get("/", (req, response) => {
+    response.send(`hello world`)
+})
 
 
 app.get("/api/hello", async (request, response) => {
