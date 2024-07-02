@@ -4,12 +4,13 @@ const app = express();
 const fetchweatherData = require('./weatherData')
 const cors = require("cors");
 const axios = require('axios')
+const unknownEEndpoint = require('./middleware/unknownEndpoint')
 
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, response) => {
-    response.send(`hello world`)
+    response.send(`hello people`)
 })
 
 
@@ -22,6 +23,7 @@ app.get("/api/hello", async (request, response) => {
   request.headers["x-forwarded-for"] ||
   request.connection.remoteAddress;
 
+  const filteredVisitorsName = visitor_name.replace('\"', "") 
   try {
   const locationRes = await axios.get(`https://ipinfo.io/${clientIP}?token=174824aeaf0f45`)
   const city = locationRes.data.city || 'New York'
@@ -30,7 +32,7 @@ app.get("/api/hello", async (request, response) => {
     .status(200)
     .json({
       client_IP: ipAddress,
-      visitor_name: visitor_name,
+      visitor_name: filteredVisitorsName,
       location,
       greeting: `Hello, ${visitor_name}!, the temperature is ${temperature} degrees Celcius in ${location}`,
     });
@@ -38,6 +40,7 @@ app.get("/api/hello", async (request, response) => {
     console.log(error)
   }
 });
+app.use(unknownEEndpoint)
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
