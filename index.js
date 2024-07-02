@@ -27,10 +27,6 @@ app.get("/api/hello", (req, response) => {
 //       greeting: `Hello, ${visitor_name}!, the temperature is ${temperature} degrees Celcius in ${location}`,
 //     });
 // });
-
-app.use(unknownEndpoint);
-app.use(errorHandler);
-
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
